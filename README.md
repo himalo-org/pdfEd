@@ -122,4 +122,4 @@ npx vercel login
 npx vercel deploy --prod
 ```
 
-Choose your Vercel account/team and link or create the `lokoon-pdf` project. Use the settings in `vercel.json`. The CLI reports the production URL after successful deployment. Alternatively, import a Git repository into Vercel with the same settings. Build-time downloads require network access; deployment fails explicitly if assets or verification cannot complete. Run browser QA before treating the deployment as production-ready. This checkout has no confirmed Vercel deployment or production URL yet.
+Choose your Vercel account/team and link or create the `lokoon-pdf` project. Use the settings in `vercel.json`. The CLI reports the production URL after successful deployment. Alternatively, import a Git repository into Vercel with the same settings. Build-time downloads require network access; deployment fails explicitly if assets or verification cannot complete. Run browser QA before treating the deployment as production-ready. https://pdfed-eta.vercel.app/
