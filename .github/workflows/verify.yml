@@ -1,0 +1,13 @@
+name: Verify PDF editor
+on:
+  pull_request:
+  push:
+    branches: [main]
+jobs:
+  verify:
+    runs-on: ubuntu-latest
+    timeout-minutes: 30
+    steps:
+      - uses: actions/checkout@v4
+      - name: Build and verify desktop, mobile and offline operation
+        run: docker compose -f compose.qa.yaml run --build --rm verification

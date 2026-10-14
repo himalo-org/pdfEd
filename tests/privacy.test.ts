@@ -1,0 +1,5 @@
+import {test} from 'node:test';
+import assert from 'node:assert/strict';
+import {readFile,readdir} from 'node:fs/promises';
+test('runtime document code uses no remote endpoints or transmission APIs',async()=>{for(const dir of ['app','components','lib'])for(const file of await readdir(dir)){if(!/\.(tsx?|js)$/.test(file))continue;const s=await readFile(`${dir}/${file}`,'utf8');assert.doesNotMatch(s,/https?:\/\//,`${file} contains a remote URL`);assert.doesNotMatch(s,/sendBeacon|XMLHttpRequest|new WebSocket|method\s*:\s*['"]POST/i,`${file} may transmit data`)}});
+test('PDF rendering and OCR assets use local paths and service worker uses allowlist',async()=>{const v=await readFile('lib/viewer.ts','utf8'),ocr=await readFile('lib/ocr.ts','utf8'),sw=await readFile('scripts/serviceworker.mjs','utf8');assert.match(v,/workerSrc='\/pdfjs\//);assert.match(ocr,/langPath:'\/ocr\//);assert.match(sw,/!FILES.includes\(path\)/);assert.match(sw,/e.request.method!=='GET'/);assert.match(sw,/u.pathname==='\/'\?'\/index.html'/)});

@@ -1,0 +1,6 @@
+import type {PageEdit} from './model';
+export function displayDelta(p:PageEdit,dx:number,dy:number){const origin=fromDisplay(p,0,0),end=fromDisplay(p,dx,dy);return [end[0]-origin[0],end[1]-origin[1]]}
+export function size(p:PageEdit){const c=p.crop||{x:0,y:0,w:p.width,h:p.height};return p.rotation%180?{w:c.h,h:c.w}:{w:c.w,h:c.h}}
+export function toDisplay(p:PageEdit,x:number,y:number){const c=p.crop||{x:0,y:0,w:p.width,h:p.height};x-=c.x;y-=c.y;switch(((p.rotation%360)+360)%360){case 90:return [c.h-y,x];case 180:return [c.w-x,c.h-y];case 270:return [y,c.w-x];default:return [x,y]}}
+export function fromDisplay(p:PageEdit,x:number,y:number){const c=p.crop||{x:0,y:0,w:p.width,h:p.height};let a=x,b=y;switch(((p.rotation%360)+360)%360){case 90:a=y;b=c.h-x;break;case 180:a=c.w-x;b=c.h-y;break;case 270:a=c.w-y;b=x;break}return [a+c.x,b+c.y]}
+export function svgTransform(p:PageEdit){const c=p.crop||{x:0,y:0,w:p.width,h:p.height};switch(((p.rotation%360)+360)%360){case 90:return `translate(${c.h} 0) rotate(90) translate(${-c.x} ${-c.y})`;case 180:return `translate(${c.w} ${c.h}) rotate(180) translate(${-c.x} ${-c.y})`;case 270:return `translate(0 ${c.w}) rotate(270) translate(${-c.x} ${-c.y})`;default:return `translate(${-c.x} ${-c.y})`}}

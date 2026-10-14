@@ -1,0 +1,49 @@
+/* Local assets only. Glass belongs to the chrome, never to document pixels. */
+.live-preview-status{padding:8px 10px;background:#ede8fb;border:1px solid #ddd4f0;border-radius:8px;color:#57458c!important}.preview-error{padding:10px;background:#fff2eb;border:1px solid #ebcabe;border-radius:8px;color:#884633!important}
+:root{--bg:#eef0f5;--paper:#fffdf9;--ink:#252636;--muted:#646777;--line:#dedfe8;--accent:#5546ce;--soft:#eeebfc;--glass:rgba(255,253,249,.89);--glass-border:rgba(255,255,255,.9);--shadow:0 8px 28px rgba(40,35,75,.065)}
+body{background:#f0eff6;-webkit-font-smoothing:antialiased}
+.app{background:radial-gradient(ellipse at 5% 0%,#dfd9f4 0,transparent 45%),radial-gradient(ellipse at 100% 100%,#e1eae7 0,transparent 40%),#f3f2f5}
+.header{background:var(--glass);border-bottom:1px solid var(--glass-border);box-shadow:0 1px 0 #37314408;position:relative;z-index:5}
+.brand{letter-spacing:-1px}.brand-pdf{color:#666274}.logo{background:linear-gradient(145deg,#7765df,#4d3eb5);box-shadow:inset 0 1px 0 #ffffff55,0 4px 12px #5546ce25;border:1px solid #ffffff45;border-radius:12px}
+.document-name strong{letter-spacing:-.15px}.document-name span{color:#6e6b7d}
+.private{padding:7px 10px;background:#eaf1e8;border:1px solid #dce7d9;border-radius:20px;color:#52674f}
+button{border-radius:9px;transition:background .16s,border-color .16s,box-shadow .16s;min-height:36px}
+button:hover:not(:disabled){border-color:#c6c0dc;background:#f2f0fa}
+button:disabled{opacity:.46}.primary{background:linear-gradient(135deg,#6857dc,#5142bf);border:1px solid #5948c7;box-shadow:inset 0 1px 0 #ffffff25,0 4px 12px #5142bf18;color:white}
+.primary:hover:not(:disabled){background:linear-gradient(135deg,#5e4bcc,#4838b3);border-color:#4e3db9;box-shadow:0 5px 16px #5142bf25}
+.sidebar{background:rgba(255,253,249,.58);border-right:1px solid #ffffff80;padding-top:24px}
+.nav-caption,.section-caption{color:#777287;font-size:10px;letter-spacing:1.25px}
+.nav-item{color:#625e71;border:1px solid transparent;border-radius:10px;min-height:44px}
+.nav-item.chosen{background:linear-gradient(120deg,#ede7fc,#f4f1ff);border-color:#dcd3f2;color:#4f3faf;box-shadow:inset 0 1px 0 #ffffffb0}
+.privacy-card{background:linear-gradient(150deg,#ffffffa8,#ecefe699);border:1px solid #ffffffd0;border-radius:14px;box-shadow:var(--shadow)}
+.privacy-card p{color:#686e62}.privacy-card strong{color:#454d41}.version{color:#777184;letter-spacing:1px}
+.editor-area{padding:12px 12px 0;gap:10px}
+.toolbar{background:var(--glass);border:1px solid var(--glass-border);border-radius:13px;box-shadow:var(--shadow);min-height:58px;height:58px;padding:0 12px}
+.toolbar button{min-width:36px;min-height:38px;color:#686176}.toolbar button.active{background:#ebe5fc;color:#4b38b4;box-shadow:inset 0 0 0 1px #d8cef5}
+.toolbar button:hover:not(:disabled){background:#eee9f8}.history-tools{border-right-color:#ded8ea}
+.editing-content{border:1px solid #ffffff90;border-radius:15px;overflow:hidden;box-shadow:var(--shadow)}
+.workspace{background:radial-gradient(ellipse at 50% 20%,#f6f5fa,transparent 65%),#eceef3}
+.canvas-heading{color:#686575;background:#ffffff35;border-bottom:1px solid #e2e2ec;min-height:45px}
+.canvas-scroll{padding:22px 26px 36px}.canvas-scroll .paper{box-shadow:0 1px 2px #29232c12,0 14px 38px #29232c14;outline:1px solid #dedde6}
+.thumbnails{background:#f8f7fbbd;border-right:1px solid #e3dfeb}.thumb-heading{color:#615a70}.thumb-heading b{background:#ece7f6;color:#665a82}
+.thumb{border-radius:9px;padding:6px}.thumb.selected{border-color:#7662d3;background:#ebe5fa;box-shadow:0 3px 12px #5546ce12}.thumb-number,.thumb-footer{color:#71697c}
+.properties{background:var(--glass);border-left:1px solid #ffffffa0;width:290px}.properties-header{background:#ffffff55;border-bottom:1px solid #e7e3ed;height:58px}.properties h2{font-size:13px;letter-spacing:-.2px}
+.panel-content{padding:22px}.panel-content label{color:#625b70;font-size:11px}.panel-content p,.muted{color:#6c6578}.panel-empty p{color:#777082}.panel-empty strong{font-size:13px;color:#514959}
+.field-row{gap:8px}input,textarea,select{background:#fffffff0;border-color:#ddd7e8;border-radius:8px;box-shadow:inset 0 1px 2px #28213703;color:#302c3b}
+input:focus,textarea:focus,select:focus{border-color:#9787d9}.tip{background:linear-gradient(135deg,#f1ecfb,#f8f5fc);border-color:#e1d8f1;border-radius:11px;color:#685b81}.tip p{color:#685b81}
+.native-span{background:#ffffffad;border:1px solid #e6e0ee;border-radius:11px;padding:12px;margin:10px 0}.native-span label:last-child{margin-bottom:0}
+.action-grid button{border-radius:10px;background:#ffffffa6;color:#63596f;min-height:52px}.object-list button{background:#ffffffb0}.object-list button[aria-pressed=true]{background:var(--soft);border-color:#cfc3eb;color:#4f3faf}
+.statusbar{border:0;border-top:1px solid #ffffffc0;background:#ffffff8c;border-radius:10px 10px 0 0;color:#6c647a;min-height:43px}.statusbar button{color:#655d72}.status-dot{background:#719569;box-shadow:0 0 0 3px #71956912}
+.welcome{background:radial-gradient(ellipse at 25% 25%,#e9e0fa90,transparent 55%),radial-gradient(ellipse at 85% 80%,#e4ece5a0,transparent 45%),#f8f7f9}
+.welcome-icon{background:linear-gradient(150deg,#fffffff5,#f6f1fd);border:1px solid #fff;box-shadow:0 8px 32px #57416b12,inset 0 0 0 1px #e8e0f460;border-radius:19px;color:#7963b2}
+.welcome h1{letter-spacing:-1.8px;color:#352d43;line-height:1.13}.welcome h1 span{color:#75608e}.welcome p{color:#777080}.eyebrow{color:#79688d;letter-spacing:2px}.drop-hint{color:#807789}.welcome-links button{color:#6c607b}.welcome-features span{color:#706876}
+.welcome-features{gap:12px}.welcome-features span{background:#ffffff8c;border:1px solid #e5dfec;border-radius:30px;padding:8px 12px}.welcome-features svg{color:#718168}
+.context-menu{background:var(--glass);border-color:#ffffffd0;border-radius:14px;box-shadow:0 12px 40px #30234425}.context-menu kbd{color:#777082}.notice{background:var(--glass);border-color:#ffffffd0;color:#695b7b;border-radius:12px}.error-toast{border-radius:14px}.busy-dialog{background:var(--glass);border-color:#ffffffd0;box-shadow:0 20px 70px #27203420}.restore-card{background:#ffffffc4;border-color:#e2d7f0;border-radius:13px}
+@supports ((backdrop-filter:blur(16px)) or (-webkit-backdrop-filter:blur(16px))){.header,.toolbar,.properties,.context-menu,.notice{backdrop-filter:blur(16px) saturate(120%);-webkit-backdrop-filter:blur(16px) saturate(120%)}}
+@media(min-width:1600px){.properties{width:320px}.editor-area{padding:16px 16px 0;gap:12px}}
+@media(max-width:1200px){.properties{width:265px}.sidebar{padding:20px 8px}.toolbar{padding:0 8px}.toolbar button{padding:8px}.editor-area{padding:10px 10px 0}}
+@media(max-width:900px){.properties{width:auto;background:rgba(255,253,249,.97);border:1px solid #ffffffd0;border-radius:18px;box-shadow:0 -8px 40px #30234420}.properties-header{border-radius:18px 18px 0 0}.panel-content{padding:20px}}
+@media(max-width:600px){.header{height:64px;background:#fffdf9f2}.header-actions button{min-height:40px}.sidebar{padding:14px 4px;background:#fffdf980}.editor-area{padding:8px 6px 0;gap:8px}.toolbar{height:54px;min-height:54px;border-radius:11px;gap:4px}.toolbar button{min-width:40px;min-height:40px}.editing-content{border-radius:12px}.canvas-scroll{padding:16px 12px 24px}.canvas-heading{min-height:40px;font-size:8px;padding:0 14px}.statusbar{padding:0 3px;min-height:46px}.properties{left:8px;right:8px;width:auto}.welcome{padding:25px 14px}.welcome h1{font-size:35px}.welcome-features{gap:6px}.welcome-features span{padding:6px 8px}.welcome-icon{border-radius:16px}.nav-item{min-height:44px}.panel-content input,.panel-content select{min-height:44px}}
+@media(prefers-reduced-transparency:reduce){.header,.toolbar,.sidebar,.thumbnails,.properties,.context-menu,.notice,.statusbar{background:var(--paper);backdrop-filter:none;-webkit-backdrop-filter:none}}
+@media(prefers-reduced-motion:reduce){button{transition:none}}
+@media(forced-colors:active){.nav-item.chosen,.toolbar button.active,.thumb.selected,.object-list button[aria-pressed=true]{outline:2px solid Highlight}.context-menu,.editing-content,.toolbar{border:1px solid CanvasText}.primary{background:ButtonFace;color:ButtonText}.paper{outline:none}}

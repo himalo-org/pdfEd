@@ -1,0 +1,8 @@
+services:
+  verification:
+    build:
+      context: .
+      target: verification
+    shm_size: 1gb
+    environment:
+      CI: "1"

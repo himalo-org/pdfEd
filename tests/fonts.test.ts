@@ -1,0 +1,13 @@
+import {test} from 'node:test';
+import assert from 'node:assert/strict';
+import {applyPreviewFonts,bundledFonts} from '../lib/fonts';
+function previewEnvironment(){
+ const originalFont=Object.getOwnPropertyDescriptor(globalThis,'FontFace'),originalDocument=Object.getOwnPropertyDescriptor(globalThis,'document');
+ class Face{constructor(public family:string,private source:ArrayBuffer){}load(){return new Uint8Array(this.source)[0]===255?Promise.reject(Error('Invalid font')):Promise.resolve(this)}}
+ const other=new Face('SourcePdfFont',new ArrayBuffer(1)),old=new Face('LokoonSans',new ArrayBuffer(1));
+ const fonts=new Set([other,old]);Object.defineProperty(globalThis,'FontFace',{configurable:true,value:Face});Object.defineProperty(globalThis,'document',{configurable:true,value:{fonts}});
+ return {fonts,old,other,restore(){if(originalFont)Object.defineProperty(globalThis,'FontFace',originalFont);else Reflect.deleteProperty(globalThis,'FontFace');if(originalDocument)Object.defineProperty(globalThis,'document',originalDocument);else Reflect.deleteProperty(globalThis,'document')}};
+}
+test('loading a replacement font is atomic and leaves PDF source fonts intact',async()=>{const env=previewEnvironment();try{await applyPreviewFonts({sans:new Uint8Array([1]),serif:new Uint8Array([2])});assert.equal(env.fonts.has(env.old),false);assert.equal(env.fonts.has(env.other),true);assert.deepEqual([...env.fonts].map(f=>f.family),['SourcePdfFont','LokoonSans','LokoonSerif'])}finally{env.restore()}});
+test('failed or cancelled font restoration preserves the current preview',async()=>{const env=previewEnvironment();try{await assert.rejects(()=>applyPreviewFonts({sans:new Uint8Array([1]),serif:new Uint8Array([255])}),/Invalid font/);assert.deepEqual([...env.fonts],[env.other,env.old]);const controller=new AbortController();controller.abort();await assert.rejects(()=>applyPreviewFonts({sans:new Uint8Array([1]),serif:new Uint8Array([2])},controller.signal));assert.deepEqual([...env.fonts],[env.other,env.old])}finally{env.restore()}});
+test('bundled fonts use same-origin assets, retry errors, and cache successful loads',async()=>{const original=globalThis.fetch;const paths:string[]=[];let fail=true;try{globalThis.fetch=async(input)=>{paths.push(String(input));return new Response(fail?null:new Uint8Array([1,2,3]),{status:fail?404:200})};await assert.rejects(()=>bundledFonts(),/Local fonts are missing/);fail=false;const a=await bundledFonts(),b=await bundledFonts();assert.equal(a,b);assert.deepEqual([...a.sans],[1,2,3]);assert.ok(paths.every(p=>p.startsWith('/fonts/')));assert.equal(paths.length,4)}finally{globalThis.fetch=original}});

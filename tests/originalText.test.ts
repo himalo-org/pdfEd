@@ -1,0 +1,6 @@
+import {test} from 'node:test';
+import assert from 'node:assert/strict';
+import {PDFDocument,StandardFonts,PDFName} from 'pdf-lib';
+import {originalRuns,applyOriginalChanges} from '../lib/originalText';
+test('original text replacement survives serialization and removes old encoded text',async()=>{const doc=await PDFDocument.create(),font=await doc.embedFont(StandardFonts.Helvetica);doc.addPage([500,700]).drawText('Original text',{x:40,y:620,size:18,font});const loaded=await PDFDocument.load(await doc.save()),runs=await originalRuns(loaded,0);assert.equal(runs.length,1);assert.equal(runs[0].text,'Original text');await applyOriginalChanges(loaded,loaded.getPage(0),[{id:runs[0].id,original:runs[0].text,replacement:'Edited text'}]);const reopened=await PDFDocument.load(await loaded.save());const updated=await originalRuns(reopened,0);assert.deepEqual(updated.map(r=>r.text),['Edited text']);assert.equal(reopened.getPage(0).getWidth(),500);});
+test('stale replacement IDs fail rather than producing an unchanged export',async()=>{const doc=await PDFDocument.create();doc.addPage();await assert.rejects(()=>applyOriginalChanges(doc,doc.getPage(0),[{id:'missing',original:'old',replacement:'new'}]),/could not be replaced/)});

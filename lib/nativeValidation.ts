@@ -1,0 +1,6 @@
+import type {NativeRect,NativeTextEdit} from './nativeTypes';
+export function sameRect(a:NativeRect,b:NativeRect){return ['x','y','w','h'].every(key=>Math.abs(a[key as keyof NativeRect]-b[key as keyof NativeRect])<.1)}
+export function intersects(a:NativeRect,b:NativeRect){return Math.min(a.x+a.w,b.x+b.w)-Math.max(a.x,b.x)>.5&&Math.min(a.y+a.h,b.y+b.h)-Math.max(a.y,b.y)>.5}
+export function validateNativeSelections(edits:NativeTextEdit[],lines:{text:string;rect:NativeRect}[]){
+ const ids=new Set<string>();for(const edit of edits){if(ids.has(edit.id))throw Error('Duplicate native text replacement.');ids.add(edit.id);if(edit.replacement.includes('\n')||edit.replacement.includes('\r'))throw Error('Replace one line at a time. Paragraph reflow is not supported.');const matches=lines.filter(line=>line.text===edit.text&&sameRect(line.rect,edit.rect));if(matches.length!==1)throw Error('The original text selection is stale or ambiguous. Reopen the document.');if(lines.some(line=>line!==matches[0]&&intersects(line.rect,edit.rect)))throw Error('This span overlaps other text. It cannot be replaced without affecting its neighbour.');if(edits.some(other=>other!==edit&&intersects(other.rect,edit.rect)))throw Error('Replacement regions overlap. Choose separate text spans.');}
+}

@@ -1,0 +1,17 @@
+node_modules
+.next
+out
+.checks
+.npm-cache
+.git
+.openai
+.agents
+.codex
+.aws
+playwright-report
+test-results
+*.tsbuildinfo
+*.log
+*.pdf
+*.lokoon
+*.part

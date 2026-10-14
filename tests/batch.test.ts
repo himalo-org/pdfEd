@@ -1,0 +1,8 @@
+import {test} from 'node:test';
+import assert from 'node:assert/strict';
+import type {PageEdit,ObjectEdit} from '../lib/model';
+import {batchPages,orderObject} from '../lib/batch';
+function fixture(){return ['a','b','c','d'].map(id=>({id,source:0,index:0,width:600,height:800,rotation:0,objects:[{id:id+'-text',kind:'text',text:id}]} as PageEdit))}
+test('batch rotation, reverse and moving retain page identities and edits',()=>{const p=fixture();const rotated=batchPages(p,[0,2],'rotate');assert.equal(rotated[0].rotation,90);assert.equal(p[0].rotation,0);assert.equal(rotated[0].objects,p[0].objects);assert.deepEqual(batchPages(p,[0,2],'reverse').map(p=>p.id),['c','b','a','d']);assert.deepEqual(batchPages(p,[0,2],'move',3).map(p=>p.id),['b','d','a','c'])});
+test('batch duplicate has independent page and object IDs and deletion keeps a page',()=>{const p=fixture(),next=batchPages(p,[0,2],'duplicate');assert.equal(next.length,6);assert.equal(next[3].objects[0].text,'a');assert.notEqual(next[3].id,p[0].id);assert.notEqual(next[3].objects[0].id,p[0].objects[0].id);assert.deepEqual(batchPages(p,[1,3],'delete').map(p=>p.id),['a','c']);assert.throws(()=>batchPages(p,[0,1,2,3],'delete'),/Keep at least/);assert.throws(()=>batchPages(p,[0],'move',5),/final start/)});
+test('object order is immutable and agrees with draw order',()=>{const o=['a','b','c'].map(id=>({id} as ObjectEdit));assert.deepEqual(orderObject(o,'a','front').map(o=>o.id),['b','c','a']);assert.deepEqual(orderObject(o,'c','back').map(o=>o.id),['c','a','b']);assert.deepEqual(orderObject(o,'b','backward').map(o=>o.id),['b','a','c']);assert.deepEqual(o.map(o=>o.id),['a','b','c'])});

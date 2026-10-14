@@ -1,0 +1,6 @@
+import {test} from 'node:test';
+import assert from 'node:assert/strict';
+import {imageDimensions} from '../lib/image';
+import {clonePage,type PageEdit} from '../lib/model';
+test('PNG and JPEG dimensions are checked before browser decoding',()=>{const png=new Uint8Array(24);png.set([137,80,78,71]);new DataView(png.buffer).setUint32(16,1200);new DataView(png.buffer).setUint32(20,800);assert.deepEqual(imageDimensions(png,'image/png'),{width:1200,height:800});const jpeg=new Uint8Array([255,216,255,192,0,8,8,0,100,0,200,1]);assert.deepEqual(imageDimensions(jpeg,'image/jpeg'),{width:200,height:100});assert.throws(()=>imageDimensions(new Uint8Array(24),'image/png'),/Invalid PNG/)});
+test('duplicating a page keeps native-image removal linked to its new replacement object',()=>{const p:PageEdit={id:'p',source:0,index:0,width:600,height:800,rotation:0,objects:[{id:'image',kind:'image',x:20,y:30,w:100,h:100,color:'#000000',rotation:0,size:1,text:'',font:'sans',align:'left',nativeImageId:'source-image'}],nativeImages:[{id:'source-image',rect:{x:20,y:30,w:100,h:100},objectId:'image'}]};const copied=clonePage(p);assert.notEqual(copied.id,p.id);assert.notEqual(copied.objects[0].id,'image');assert.equal(copied.nativeImages![0].objectId,copied.objects[0].id);assert.equal(p.nativeImages![0].objectId,'image')});

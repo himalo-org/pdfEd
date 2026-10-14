@@ -1,0 +1,38 @@
+{
+  "name": "lokoon-pdf",
+  "version": "1.0.0",
+  "private": true,
+  "engines": { "node": "22.x" },
+  "scripts": {
+    "assets": "node scripts/assets.mjs",
+    "dev": "next dev",
+    "build": "npm run assets && node scripts/source.mjs && next build && node scripts/offline.mjs",
+    "test": "tsx --test tests/*.test.ts tests/*.test.mjs",
+    "typecheck": "tsc --noEmit",
+    "check:syntax": "node scripts/check-syntax.cjs",
+    "test:browser": "playwright test",
+    "preview": "node scripts/serve.mjs"
+  },
+  "dependencies": {
+    "next": "15.5.27",
+    "react": "19.2.8",
+    "react-dom": "19.2.8",
+    "pdf-lib": "1.17.1",
+    "pdfjs-dist": "4.10.38",
+    "@pdf-lib/fontkit": "1.1.1",
+    "lucide-react": "0.469.0",
+    "idb": "8.0.2",
+    "tesseract.js": "6.0.1",
+    "mupdf": "1.28.1"
+  },
+  "devDependencies": {
+    "typescript": "5.9.3",
+    "@types/react": "^19.0.0",
+    "@types/react-dom": "^19.0.0",
+    "@types/node": "^22.0.0",
+    "tsx": "4.21.0",
+    "@playwright/test": "^1.51.0",
+    "fflate": "0.8.2"
+  },
+  "license": "AGPL-3.0-or-later"
+}

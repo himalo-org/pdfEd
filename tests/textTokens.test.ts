@@ -1,0 +1,6 @@
+import {test} from 'node:test';
+import assert from 'node:assert/strict';
+import {scanTextRuns,replaceTokens} from '../lib/textTokens';
+test('original text parser handles escaped, hex and kerning-array strings',()=>{const s='BT /F1 12 Tf (A\\(B\\)\\040C) Tj [(Hello) -40 <576f726c64>] TJ ET';assert.deepEqual(scanTextRuns(s,f=>f==='F1').map(r=>r.text),['A(B) C','Hello','World'])});
+test('font state and unsupported encodings never offer unsafe strings',()=>{const s='BT /F1 12 Tf (safe) Tj q /CID 10 Tf <00410042> Tj Q (safe again) Tj ET';assert.deepEqual(scanTextRuns(s,f=>f==='F1').map(r=>r.text),['safe','safe again']);assert.throws(()=>scanTextRuns('BT /F1 12 Tf (safe) Tj ET BI /W 1 ID data EI',()=>true),/Inline image/)});
+test('replacement changes actual string bytes and escapes PDF syntax',()=>{const s='BT /F1 12 Tf (Original one) Tj (Original two) Tj ET',runs=scanTextRuns(s,()=>true);const next=replaceTokens(s,[{...runs[0],replacement:'New (one)'},{...runs[1],replacement:'Path\\two'}]);assert.ok(!next.includes('Original'));assert.deepEqual(scanTextRuns(next,()=>true).map(r=>r.text),['New (one)','Path\\two']);assert.throws(()=>replaceTokens(s,[{...runs[0],replacement:'Привет'}]),/ASCII/)});
